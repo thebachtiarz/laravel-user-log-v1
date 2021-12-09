@@ -26,7 +26,10 @@
     "autoload": {
         "psr-4": {
             "TheBachtiarz\\UserLog\\": "src/"
-        }
+        },
+        "files": [
+            "helper/helper.php"
+        ]
     },
     "extra": {
         "laravel": {

@@ -7,15 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use TheBachtiarz\Toolkit\Helper\App\Converter\ArrayHelper;
 use TheBachtiarz\Toolkit\Helper\App\Carbon\CarbonHelper;
 use TheBachtiarz\Toolkit\Helper\App\Converter\ConverterHelper;
-use TheBachtiarz\UserLog\UserLogInterface;
 
 class UserHistory extends Model
 {
     use HasFactory, ArrayHelper, CarbonHelper, ConverterHelper;
 
     protected $fillable = ['user_id', 'log_manager_id', 'history'];
-
-    const HISTORY_DAY_LIMIT = config(UserLogInterface::USERLOG_CONFIG_NAME . '.limit_days');
 
     // ? Map
     public function simpleListMap(): array
@@ -43,20 +40,24 @@ class UserHistory extends Model
         return $query->where('user_id', $userId);
     }
 
-    public function scopeGetUserHistoryLastDays($query, int $userId, int $days = self::HISTORY_DAY_LIMIT): ?object
+    public function scopeGetUserHistoryLastDays($query, int $userId, ?int $days = null): ?object
     {
+        if (!$days) $days = tbuserlogconfig('limit_days');
+
         return $query->getByUserId($userId)->where('created_at', '>=', self::dbGetFullDateSubDays($days));
     }
 
-    public function scopeGetUserHistoryByLogTypeLastDays($query, int $userId, array $logIds, int $days = self::HISTORY_DAY_LIMIT): ?object
+    public function scopeGetUserHistoryByLogTypeLastDays($query, int $userId, array $logIds, ?int $days = null): ?object
     {
+        if (!$days) $days = tbuserlogconfig('limit_days');
+
         return $query->getUserHistoryLastDays($userId, $days)->whereIn('log_manager_id', $logIds);
     }
 
     // ? Relation
     public function user()
     {
-        return $this->belongsTo(config(UserLogInterface::USERLOG_CONFIG_NAME . '.user_class')::class, 'user_id');
+        return $this->belongsTo(tbuserlogconfig('user_class'), 'user_id');
     }
 
     public function logmanager()
