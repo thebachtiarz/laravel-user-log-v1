@@ -17,7 +17,7 @@ class CreateUserHistoriesTable extends Migration
     {
         Schema::create('user_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(config(UserLogInterface::USERLOG_CONFIG_NAME . '.user_class'))->nullable()->constrained()->nullOnDelete();
+            $table->foreignIdFor(tbuserlogconfig('user_class'))->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(LogManager::class)->nullable()->constrained()->nullOnDelete();
             $table->text('history');
             $table->timestamps();

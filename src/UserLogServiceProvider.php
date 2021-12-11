@@ -31,12 +31,12 @@ class UserLogServiceProvider extends ServiceProvider
     {
         if (app()->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../database/migrations' => database_path('migrations'),
-            ], 'userlog-migrations');
+                __DIR__ . '/../config/' . UserLogInterface::USERLOG_CONFIG_NAME . '.php' => config_path(UserLogInterface::USERLOG_CONFIG_NAME . '.php'),
+            ], 'thebachtiarz-userlog-config');
 
             $this->publishes([
-                __DIR__ . '/../config/' . UserLogInterface::USERLOG_CONFIG_NAME . '.php' => config_path(UserLogInterface::USERLOG_CONFIG_NAME . '.php'),
-            ], 'userlog-config');
+                __DIR__ . '/../database/migrations' => database_path('migrations'),
+            ], 'thebachtiarz-userlog-migrations');
         }
     }
 }
