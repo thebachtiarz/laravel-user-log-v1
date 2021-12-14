@@ -8,7 +8,7 @@ return [
     | Define user class location
     |
     */
-    'user_class' => \Models\User\User::class,
+    'user_class' => '',
 
     /*
     |--------------------------------------------------------------------------

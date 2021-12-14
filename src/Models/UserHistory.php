@@ -4,6 +4,7 @@ namespace TheBachtiarz\UserLog\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use TheBachtiarz\Auth\Model\User;
 use TheBachtiarz\Toolkit\Helper\App\Converter\ArrayHelper;
 use TheBachtiarz\Toolkit\Helper\App\Carbon\CarbonHelper;
 use TheBachtiarz\Toolkit\Helper\App\Converter\ConverterHelper;
@@ -57,7 +58,7 @@ class UserHistory extends Model
     // ? Relation
     public function user()
     {
-        return $this->belongsTo(tbuserlogconfig('user_class'), 'user_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function logmanager()

@@ -2,6 +2,7 @@
 
 namespace TheBachtiarz\UserLog\Job;
 
+use TheBachtiarz\Auth\Model\User;
 use TheBachtiarz\Toolkit\Helper\App\Converter\ArrayHelper;
 use TheBachtiarz\UserLog\Models\UserHistory;
 
