@@ -26,6 +26,6 @@ trait LogManagerTrait
     public static function logCodeToLogId(string $logCode): int
     {
         $getLog = self::getLogByLogCode($logCode);
-        return $getLog->count() ? $getLog->id : tbuserlogconfig('log_id_error_default');
+        return $getLog->first() ? $getLog->id : tbuserlogconfig('log_id_error_default');
     }
 }

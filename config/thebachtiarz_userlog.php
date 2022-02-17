@@ -3,15 +3,6 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | User class location
-    |--------------------------------------------------------------------------
-    | Define user class location
-    |
-    */
-    'user_class' => '',
-
-    /*
-    |--------------------------------------------------------------------------
     | Log limit past days
     |--------------------------------------------------------------------------
     | Define log limit past days
@@ -44,23 +35,6 @@ return [
     | Define log id error default
     |
     */
-    'log_id_error_default' => '',
+    'log_id_error_default' => \TheBachtiarz\UserLog\Interfaces\Data\LogManagerDataInterface::LOG_SCAPEGOAT_ID,
 
-    /*
-    |--------------------------------------------------------------------------
-    | Log data allowed general access
-    |--------------------------------------------------------------------------
-    | Define log data allowed general access
-    |
-    */
-    'log_allowed_general_access' => [],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Log data allowed user access
-    |--------------------------------------------------------------------------
-    | Define log data allowed user access
-    |
-    */
-    'log_allowed_user_access' => []
 ];

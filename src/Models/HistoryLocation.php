@@ -2,18 +2,14 @@
 
 namespace TheBachtiarz\UserLog\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use TheBachtiarz\UserLog\Traits\Model\History\{HistoryLocationMapTrait, HistoryLocationScopeTrait};
 
 class HistoryLocation extends Model
 {
-    use HasFactory;
+    use HistoryLocationMapTrait, HistoryLocationScopeTrait;
 
     protected $fillable = ['user_history_id', 'location'];
-
-    // ? Map
-
-    // ? Scope
 
     // ? Relation
     public function userhistory()

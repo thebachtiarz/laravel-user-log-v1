@@ -2,92 +2,200 @@
 
 namespace TheBachtiarz\UserLog\Job;
 
-use TheBachtiarz\UserLog\Models\UserHistory;
-use TheBachtiarz\UserLog\Traits\LogManagerTrait;
+use TheBachtiarz\Auth\Model\User;
+use TheBachtiarz\Toolkit\Helper\App\Log\ErrorLogTrait;
+use TheBachtiarz\UserLog\Models\{HistoryLocation, LogManager, UserHistory};
 
 class UserHistoryJob
 {
-    use LogManagerTrait;
+    use ErrorLogTrait;
 
-    private static int $id;
-    private static int $userId;
-    private static string $logCode;
-    private static string $history;
+    /**
+     * Model User data
+     *
+     * @var User
+     */
+    protected static User $user;
 
-    private static ?int $limitDays = null;
+    /**
+     * Model Log Manager data
+     *
+     * @var LogManager
+     */
+    protected static LogManager $logManager;
 
-    public function __construct()
-    {
-        if (!self::$limitDays)
-            self::$limitDays = tbuserlogconfig('limit_days');
-    }
+    /**
+     * Model History Location data
+     *
+     * @var HistoryLocation
+     */
+    protected static HistoryLocation $historyLocation;
+
+    /**
+     * protected log code
+     *
+     * @var string
+     */
+    protected static string $logCode;
+
+    /**
+     * log history
+     *
+     * @var string
+     */
+    protected static string $logHistory;
+
+    /**
+     * log history location
+     *
+     * @var string|null
+     */
+    protected static ?string $logHistoryLocation = null;
+
+    /**
+     * limit history days
+     *
+     * @var integer|null
+     */
+    protected static ?int $limitDays = null;
 
     // ? Public Methods
     /**
-     * get list of user history
-     *
-     * @return object
-     */
-    public static function get(): object
-    {
-        return UserHistory::getUserHistoryLastDays(self::$userId, self::$limitDays)->get();
-    }
-
-    /**
      * create new user history
      *
-     * @return object
+     * @param boolean $map
+     * @return array
      */
-    public static function create(): object
+    public static function create(bool $map = false): array
     {
-        return UserHistory::create([
-            'user_id' => self::$userId,
-            'log_manager_id' => self::logCodeToLogId(self::$logCode),
-            'history' => self::$history
-        ]);
+        $result = ['status' => false, 'data' => null, 'message' => ''];
+
+        try {
+            $_create = UserHistory::create([
+                'user_id' => self::$user->id,
+                'log_manager_id' => self::$logManager->id,
+                'history' => self::$logHistory
+            ]);
+
+            throw_if(!$_create, 'Exception', "Failed to create user history");
+
+            if (self::$logHistoryLocation) {
+                $_historyLocation = HistoryLocationJob::setUserHistory($_create)->setLocationData(self::$logHistoryLocation)->create();
+
+                throw_if(!$_historyLocation['status'], 'Exception', $_historyLocation['message']);
+            }
+
+            $result['data'] = $map ? $_create->simpleListMap() : $_create;
+            $result['status'] = true;
+            $result['message'] = "Successfully create user history";
+        } catch (\Throwable $th) {
+            $result['message'] = $th->getMessage();
+
+            self::logCatch($th);
+        } finally {
+            return $result;
+        }
     }
 
     /**
-     * get detail of user history
+     * get user histories
      *
-     * @return object
+     * @param boolean $map
+     * @return array
      */
-    public static function find(): object
+    public static function getHistories(bool $map = false): array
     {
-        return UserHistory::getByUserId(self::$userId)->find(self::$id);
+        $result = ['status' => false, 'data' => null, 'message' => ''];
+
+        try {
+            $_histories = UserHistory::getHistories(self::$user->id, self::$limitDays);
+
+            throw_if(!$_histories->count(), 'Exception', "There is no histories");
+
+            $result['data'] = $map ? $_histories->get()->map->simpleListMap() : $_histories->get();
+            $result['status'] = true;
+            $result['message'] = "User histories";
+        } catch (\Throwable $th) {
+            $result['message'] = $th->getMessage();
+
+            self::logCatch($th);
+        } finally {
+            return $result;
+        }
+    }
+
+    /**
+     * get user histories by log manager
+     *
+     * @param boolean $map
+     * @return array
+     */
+    public static function getHistoriesByLogManager(bool $map = false): array
+    {
+        $result = ['status' => false, 'data' => null, 'message' => ''];
+
+        try {
+            $_histories = UserHistory::getHistoriesByLogId(self::$user->id, self::$logManager->id, self::$limitDays);
+
+            throw_if(!$_histories->count(), 'Exception', "There is no histories");
+
+            $result['data'] = $map ? $_histories->get()->map->simpleListMap() : $_histories->get();
+            $result['status'] = true;
+            $result['message'] = "User histories";
+        } catch (\Throwable $th) {
+            $result['message'] = $th->getMessage();
+
+            self::logCatch($th);
+        } finally {
+            return $result;
+        }
     }
 
     // ? Setter Modules
+
     /**
-     * set user history id
+     * Set model User data
      *
-     * @param int $id
+     * @param User $user Model User data
      * @return self
      */
-    public static function setId(int $id): self
+    public static function setUser(User $user): self
     {
-        self::$id = $id;
+        self::$user = $user;
 
         return new self;
     }
 
     /**
-     * set user history user id
+     * Set model Log Manager data
      *
-     * @param integer $userId
+     * @param LogManager $logManager Model Log Manager data
      * @return self
      */
-    public static function setUserId(int $userId): self
+    public static function setLogManager(LogManager $logManager): self
     {
-        self::$userId = $userId;
+        self::$logManager = $logManager;
 
         return new self;
     }
 
     /**
-     * set user history log code
+     * Set model History Location data
      *
-     * @param string $logCode
+     * @param HistoryLocation $historyLocation Model History Location data
+     * @return self
+     */
+    public static function setHistoryLocation(HistoryLocation $historyLocation): self
+    {
+        self::$historyLocation = $historyLocation;
+
+        return new self;
+    }
+
+    /**
+     * Set protected log code
+     *
+     * @param string $logCode protected log code
      * @return self
      */
     public static function setLogCode(string $logCode): self
@@ -98,25 +206,38 @@ class UserHistoryJob
     }
 
     /**
-     * set user history information
+     * Set log history
      *
-     * @param string $history
+     * @param string $logHistory log history
      * @return self
      */
-    public static function setHistory(string $history): self
+    public static function setLogHistory(string $logHistory): self
     {
-        self::$history = $history;
+        self::$logHistory = $logHistory;
 
         return new self;
     }
 
     /**
-     * set limit days of history
+     * Set log history location
      *
-     * @param integer|null $limitDays
+     * @param string $logHistoryLocation log history location
      * @return self
      */
-    public static function setLimitDays(?int $limitDays = null): self
+    public static function setLogHistoryLocation(string $logHistoryLocation): self
+    {
+        self::$logHistoryLocation = $logHistoryLocation;
+
+        return new self;
+    }
+
+    /**
+     * Set limit history days
+     *
+     * @param integer $limitDays limit history days
+     * @return self
+     */
+    public static function setLimitDays(int $limitDays): self
     {
         self::$limitDays = $limitDays;
 

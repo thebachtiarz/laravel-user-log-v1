@@ -2,46 +2,19 @@
 
 namespace TheBachtiarz\UserLog\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use TheBachtiarz\Toolkit\Helper\App\Carbon\CarbonHelper;
+use Illuminate\Database\Eloquent\{Model, SoftDeletes};
+use TheBachtiarz\UserLog\Traits\Model\Log\{LogManagerMapTrait, LogManagerScopeTrait};
 
 class LogManager extends Model
 {
-    use HasFactory, SoftDeletes, CarbonHelper;
+    use SoftDeletes;
+
+    use LogManagerMapTrait, LogManagerScopeTrait;
 
     protected $fillable = ['name_type', 'alt_code', 'description'];
 
-    // ? Map
-    public function simpleListMap()
-    {
-        return [
-            'type' => $this->name_type,
-            'code' => $this->alt_code,
-            'description' => $this->description
-        ];
-    }
-
-    public function simpleDetailMap()
-    {
-        return [
-            'type' => $this->name_type,
-            'code' => $this->alt_code,
-            'description' => $this->description,
-            'created' => self::humanDateTime($this->created_at),
-            'updated' => self::humanIntervalCreateUpdate($this->created_at, $this->updated_at)
-        ];
-    }
-
-    // ? scope
-    public function scopeGetLogByCode($query, string $logCode)
-    {
-        return $query->where('alt_code', $logCode)->first();
-    }
-
     // ? Relation
-    public function userhistory()
+    public function userhistories()
     {
         return $this->hasMany(UserHistory::class, 'log_manager_id');
     }

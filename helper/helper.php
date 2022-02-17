@@ -6,7 +6,7 @@ use TheBachtiarz\UserLog\UserLogInterface;
  * thebachtiarz user log config
  *
  * @param string|null $keyName config key name | null will return all
- * @return mixed|null
+ * @return mixed
  */
 function tbuserlogconfig(?string $keyName = null)
 {

@@ -2,63 +2,78 @@
 
 namespace TheBachtiarz\UserLog\Job;
 
-use TheBachtiarz\Auth\Model\User;
 use TheBachtiarz\Toolkit\Helper\App\Converter\ArrayHelper;
-use TheBachtiarz\UserLog\Models\UserHistory;
+use TheBachtiarz\Toolkit\Helper\App\Log\ErrorLogTrait;
+use TheBachtiarz\UserLog\Models\{HistoryLocation, UserHistory};
 
 class HistoryLocationJob
 {
-    use ArrayHelper;
+    use ErrorLogTrait, ArrayHelper;
 
-    private static User $user;
+    /**
+     * Model User History data
+     *
+     * @var UserHistory
+     */
+    protected static UserHistory $userHistory;
 
-    private static UserHistory $userHistory;
+    /**
+     * Model History Location data
+     *
+     * @var HistoryLocation
+     */
+    protected static HistoryLocation $historyLocation;
 
-    private static string $location;
+    /**
+     * location data
+     *
+     * @var string
+     */
+    protected static string $locationData;
 
     // ? Public Methods
     /**
-     * get history location list by user
+     * create new user history location
      *
-     * @return object|null
+     * @param boolean $map
+     * @return array
      */
-    public static function get(): ?object
+    public static function create(bool $map = false): array
     {
-        return self::getHistoryLocation();
+        $result = ['status' => false, 'data' => null, 'message' => ''];
+
+        try {
+            $_create = HistoryLocation::create([
+                'user_history_id' => self::$userHistory->id,
+                'location' => self::locationSetterResolver()
+            ]);
+
+            throw_if(!$_create, 'Exception', "Failed to create history location");
+
+            $result['data'] = $_create;
+            $result['status'] = true;
+            $result['message'] = "Successfully create history location";
+        } catch (\Throwable $th) {
+            $result['message'] = $th->getMessage();
+
+            self::logCatch($th);
+        } finally {
+            return $result;
+        }
     }
 
+    // ? Private Methods
     /**
-     * create history location by user
-     *
-     * @return object|null
-     */
-    public static function create(): ?object
-    {
-        return self::createNewHistoryLocation();
-    }
-
-    /**
-     * show detail history location by user
-     *
-     * @return object|null
-     */
-    public static function show(): ?object
-    {
-        return self::showHistoryLocationDetail();
-    }
-
-    // ? Public Helper
-    /**
-     * history location setter template helper
+     * history location setter resolver
      *
      * @return string
      */
-    public static function historyLocationSetTemplate(): string
+    public static function locationSetterResolver(): string
     {
         $historyProcess = [];
 
         try {
-            $arrayLocation = self::jsonDecode(self::$location);
+            $arrayLocation = self::jsonDecode(self::$locationData);
 
             $historyKeys = tbuserlogconfig('location_keys');
 
@@ -71,98 +86,11 @@ class HistoryLocationJob
         }
     }
 
-    // ? Private Methods
-    /**
-     * get history location list by user process
-     *
-     * @return object|null
-     */
-    private static function getHistoryLocation(): ?object
-    {
-        try {
-            return self::getUserHistoryByUser()->historylocation;
-        } catch (\Throwable $th) {
-            return null;
-        }
-    }
-
-    /**
-     * create history location by user process
-     *
-     * @return object|null
-     */
-    private static function createNewHistoryLocation(): ?object
-    {
-        try {
-            return self::getUserHistoryByUserHistory()->historylocation()->create([
-                'location' => self::historyLocationSetTemplate()
-            ]);
-        } catch (\Throwable $th) {
-            return null;
-        }
-    }
-
-    /**
-     * show detail history location by user process
-     *
-     * @return object|null
-     */
-    private static function showHistoryLocationDetail(): ?object
-    {
-        try {
-            return self::getUserHistoryByUserHistory()->historylocation;
-        } catch (\Throwable $th) {
-            return null;
-        }
-    }
-
-    // ? Private Core Process
-    /**
-     * get user history data by user
-     *
-     * @return object|null
-     */
-    private static function getUserHistoryByUser(): ?object
-    {
-        try {
-            return self::$user->userhistory;
-        } catch (\Throwable $th) {
-            return null;
-        }
-    }
-
-    /**
-     * get user history data by user history
-     *
-     * @return object|null
-     */
-    private static function getUserHistoryByUserHistory(): ?object
-    {
-        try {
-            return self::$userHistory;
-        } catch (\Throwable $th) {
-            return null;
-        }
-    }
-
     // ? Setter Modules
     /**
-     * set [User] data
+     * Set model User History data
      *
-     * @param User $user
-     * @return self
-     */
-    public static function setUser(User $user): self
-    {
-        self::$user = $user;
-
-        return new self;
-    }
-
-    /**
-     * set [UserHistory] data
-     *
-     * @param UserHistory $userHistory
+     * @param UserHistory $userHistory Model User History data
      * @return self
      */
     public static function setUserHistory(UserHistory $userHistory): self
@@ -173,14 +101,27 @@ class HistoryLocationJob
     }
 
     /**
-     * set location data
+     * Set model History Location data
      *
-     * @param string $location
+     * @param HistoryLocation $historyLocation Model History Location data
      * @return self
      */
-    public static function setLocation(string $location): self
+    public static function setHistoryLocation(HistoryLocation $historyLocation): self
     {
-        self::$location = $location;
+        self::$historyLocation = $historyLocation;
+
+        return new self;
+    }
+
+    /**
+     * Set location data
+     *
+     * @param string $locationData location data
+     * @return self
+     */
+    public static function setLocationData(string $locationData): self
+    {
+        self::$locationData = $locationData;
 
         return new self;
     }
