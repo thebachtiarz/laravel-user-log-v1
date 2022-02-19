@@ -83,7 +83,7 @@ class LogManagerService
     {
         try {
             $_logManagerData = array_merge(
-                LogManagerDataInterface::LOG_DATA_MANAGEMENT,
+                LogManagerDataInterface::LOG_MANAGEMENT_DATA,
                 tbuserlogconfig('log_data_management')
             );
 
@@ -97,7 +97,7 @@ class LogManagerService
                  * if exist, then do update.
                  * if not, then do create.
                  */
-                $_logManagerMutation->find()
+                $_logManagerMutation->find()['status']
                     ? $_logManagerMutation->update()
                     : $_logManagerMutation->create();
             }
