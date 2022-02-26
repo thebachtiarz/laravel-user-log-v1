@@ -2,6 +2,7 @@
 
 namespace TheBachtiarz\UserLog\Job;
 
+use Illuminate\Support\Facades\DB;
 use TheBachtiarz\Auth\Model\User;
 use TheBachtiarz\Toolkit\Helper\App\Log\ErrorLogTrait;
 use TheBachtiarz\UserLog\Models\{HistoryLocation, LogManager, UserHistory};
@@ -71,6 +72,8 @@ class UserHistoryJob
         $result = ['status' => false, 'data' => null, 'message' => ''];
 
         try {
+            DB::beginTransaction();
+
             $_create = UserHistory::create([
                 'user_id' => self::$user->id,
                 'log_manager_id' => self::$logManager->id,
@@ -79,16 +82,17 @@ class UserHistoryJob
 
             throw_if(!$_create, 'Exception', "Failed to create user history");
 
-            if (self::$logHistoryLocation) {
-                $_historyLocation = HistoryLocationJob::setUserHistory($_create)->setLocationData(self::$logHistoryLocation)->create();
+            if (iconv_strlen(self::$logHistoryLocation))
+                HistoryLocationJob::setUserHistory($_create)->setLocationData(self::$logHistoryLocation)->create();
 
-                throw_if(!$_historyLocation['status'], 'Exception', $_historyLocation['message']);
-            }
+            DB::commit();
 
             $result['data'] = $map ? $_create->simpleListMap() : $_create;
             $result['status'] = true;
             $result['message'] = "Successfully create user history";
         } catch (\Throwable $th) {
+            DB::rollBack();
+
             $result['message'] = $th->getMessage();
 
             self::logCatch($th);

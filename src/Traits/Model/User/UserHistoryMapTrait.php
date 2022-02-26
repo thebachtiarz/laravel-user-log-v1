@@ -26,7 +26,7 @@ trait UserHistoryMapTrait
                 'date' => self::humanDateTime($this->created_at, 'date'),
                 'time' => self::humanDateTime($this->created_at, 'time')
             ]
-        ] + $this->locationResolver() + $this->getId() + $this->getTimestamps();
+        ] + $this->locationResolver();
     }
 
     /**
@@ -37,7 +37,7 @@ trait UserHistoryMapTrait
     private function locationResolver(): array
     {
         return $this->historylocation
-            ? $this->historylocation->simpleListMap()
+            ? ['location' => $this->historylocation->simpleListMap()['location']]
             : ['location' => null];
     }
 }

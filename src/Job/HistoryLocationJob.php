@@ -43,9 +43,12 @@ class HistoryLocationJob
         $result = ['status' => false, 'data' => null, 'message' => ''];
 
         try {
+            $_location = self::locationSetterResolver();
+            throw_if(!$_location, 'Exception', "Incorrect location format");
+
             $_create = HistoryLocation::create([
                 'user_history_id' => self::$userHistory->id,
-                'location' => self::locationSetterResolver()
+                'location' => $_location
             ]);
 
             throw_if(!$_create, 'Exception', "Failed to create history location");
@@ -66,9 +69,9 @@ class HistoryLocationJob
     /**
      * history location setter resolver
      *
-     * @return string
+     * @return string|null
      */
-    public static function locationSetterResolver(): string
+    public static function locationSetterResolver(): ?string
     {
         $historyProcess = [];
 
@@ -78,11 +81,14 @@ class HistoryLocationJob
             $historyKeys = tbuserlogconfig('location_keys');
 
             foreach ($historyKeys as $key => $historyKey)
-                $historyProcess[$historyKey] = $arrayLocation[$historyKey] ?? null;
-        } catch (\Throwable $th) {
-            $historyProcess = [];
-        } finally {
+                if ($arrayLocation[$historyKey])
+                    $historyProcess[$historyKey] = $arrayLocation[$historyKey];
+
+            throw_if(!count($historyProcess), 'Exception', "");
+
             return self::jsonEncode($historyProcess);
+        } catch (\Throwable $th) {
+            return null;
         }
     }
 

@@ -22,15 +22,15 @@ interface LogManagerDataInterface
      * default scapegoat log code
      */
     public const LOG_SCAPEGOAT_ID = 1;
-    public const LOG_SCAPEGOAT = '999999';
+    public const LOG_SCAPEGOAT = "999999";
 
     public const LOG_SCAPEGOAT_DESC = "Scapegoat log, server cannot understand the request";
 
     /**
      * Register log code
      */
-    public const REGISTER_CREATE_MEMBER = '100110';
-    public const REGISTER_UPDATE_MEMBER = '100120';
+    public const REGISTER_CREATE_MEMBER = "100110";
+    public const REGISTER_UPDATE_MEMBER = "100120";
 
     public const REGISTER_CREATE_MEMBER_DESC = "A new user has been created";
     public const REGISTER_UPDATE_MEMBER_DESC = "The new user has updated";
@@ -38,10 +38,10 @@ interface LogManagerDataInterface
     /**
      * Auth log code
      */
-    public const AUTH_LOGIN = '100130';
-    public const AUTH_LOGOUT = '100140';
-    public const AUTH_LOGOUT_REVOKE = '100141';
-    public const AUTH_RENEW_PASSWORD = '100150';
+    public const AUTH_LOGIN = "100130";
+    public const AUTH_LOGOUT = "100140";
+    public const AUTH_LOGOUT_REVOKE = "100141";
+    public const AUTH_RENEW_PASSWORD = "100150";
 
     public const AUTH_LOGIN_DESC = "The user is signed in to account";
     public const AUTH_LOGOUT_DESC = "The user is signed out from account";
