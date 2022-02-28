@@ -12,6 +12,13 @@ use TheBachtiarz\UserLog\Models\LogManager;
 trait UserHistoryTraitService
 {
     /**
+     * history location data
+     *
+     * @var string|null
+     */
+    private static ?string $historyLocation = null;
+
+    /**
      * create user history
      *
      * @param User $user
@@ -31,6 +38,8 @@ trait UserHistoryTraitService
                 ->setLogManager($_logManager)
                 ->setLogHistory($historyMessage);
 
+            $historyLocation = $historyLocation ?: self::$historyLocation;
+
             if ($historyLocation)
                 $_createUserHistory = $_createUserHistory->setLogHistoryLocation($historyLocation);
 
@@ -40,5 +49,18 @@ trait UserHistoryTraitService
         } catch (\Throwable $th) {
             return false;
         }
+    }
+
+    /**
+     * Set history location data
+     *
+     * @param string|null $historyLocation history location data
+     * @return self
+     */
+    private static function setHistoryLocation(?string $historyLocation = null): self
+    {
+        self::$historyLocation = $historyLocation;
+
+        return new self;
     }
 }
