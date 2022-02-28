@@ -3,10 +3,11 @@
 
 -------
 
-### Requires
+## Requires
 - [thebachtiarz/laravel-toolkit-v1](https://github.com/thebachtiarz/laravel-toolkit-v1/)
+- [thebachtiarz/laravel-auth-v1](https://github.com/thebachtiarz/laravel-toolkit-v1/)
 
-### Installation
+## Installation
 - composer config (only if you have access)
 ```bash
 composer config repositories.thebachtiarz/laravel-user-log-v1 git git@github.com:thebachtiarz/laravel-user-log-v1.git
@@ -14,7 +15,11 @@ composer config repositories.thebachtiarz/laravel-user-log-v1 git git@github.com
 
 - install repository
 ```bash
-composer require thebachtiarz/laravel-user-log-v1
+Laravel 9:
+composer require thebachtiarz/laravel-user-log-v1:^2.0
+
+Laravel 8:
+composer require thebachtiarz/laravel-user-log-v1:^1.0
 ```
 
 - vendor publish
@@ -28,7 +33,7 @@ php artisan migrate
 ```
 
 -------
-### Feature
+## Feature
 
 > sek males nulis cak :v
 -------
