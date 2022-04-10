@@ -23,10 +23,10 @@ class HistoryLocationMiddleware
         $_location = null;
 
         try {
-            if ($request->has('location')) {
-                throw_if(!is_string($request->get('location')), 'Exception', "Invalid history location format");
+            if ($request->has(tbuserlogconfig('location_param_name'))) {
+                throw_if(!is_string($request->get(tbuserlogconfig('location_param_name'))), 'Exception', "Invalid history location format");
 
-                $_location = $request->get('location');
+                $_location = $request->get(tbuserlogconfig('location_param_name'));
             }
         } catch (\Throwable $th) {
             self::logCatch($th);
