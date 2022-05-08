@@ -1,0 +1,58 @@
+<?php
+
+namespace TheBachtiarz\UserLog\Interfaces\Validator;
+
+use TheBachtiarz\Toolkit\Helper\Interfaces\Validator\GlobalValidatorInterface;
+
+interface LogValidatorInterface
+{
+    // ? Rules
+
+    /**
+     * log code validator rules
+     */
+    public const LOG_CODE_RULES = [
+        'code' => ["required", "numeric"],
+    ];
+
+    /**
+     * log create validator rules
+     */
+    public const LOG_CREATE_RULES = [
+        'type' => ["required", "string", "alpha_dash"],
+        'info' => ["required", "string", GlobalValidatorInterface::RULES_REGEX_NAME_ADVANCE]
+    ] + self::LOG_CODE_RULES;
+
+    /**
+     * log update validator rules
+     */
+    public const LOG_UPDATE_RULES = [
+        'type' => ["required", "string", "alpha_dash"],
+        'info' => ["required", "string", GlobalValidatorInterface::RULES_REGEX_NAME_ADVANCE]
+    ];
+
+    // ? Messages
+
+    /**
+     * log code validator messages
+     */
+    public const LOG_CODE_MESSAGES = [
+        'code.numeric' => 'Log code must be an numeric character',
+    ];
+
+    /**
+     * log create validator messages
+     */
+    public const LOG_CREATE_MESSAGES = [
+        'type.alpha_dash' => 'Log type cannot be accepted',
+        'info.regex' => 'Log info cannot be accepted'
+    ] + self::LOG_CODE_MESSAGES;
+
+    /**
+     * log update validator messages
+     */
+    public const LOG_UPDATE_MESSAGES = [
+        'type.alpha_dash' => 'Log type cannot be accepted',
+        'info.regex' => 'Log info cannot be accepted'
+    ];
+}

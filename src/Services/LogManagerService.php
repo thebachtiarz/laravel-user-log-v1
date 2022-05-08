@@ -11,11 +11,11 @@ class LogManagerService
     use DataResponse;
 
     /**
-     * log name
+     * log type name
      *
      * @var string
      */
-    private static string $logName;
+    private static string $logType;
 
     /**
      * log code
@@ -40,7 +40,7 @@ class LogManagerService
     public static function create(): array
     {
         try {
-            $_create = LogManagerJob::setLogNameType(self::$logName)
+            $_create = LogManagerJob::setLogNameType(self::$logType)
                 ->setLogAltCode(self::$logCode)
                 ->setLogInformation(self::$logInfo)
                 ->create(true);
@@ -54,6 +54,42 @@ class LogManagerService
     }
 
     /**
+     * get all log manager
+     *
+     * @return array
+     */
+    public static function list(): array
+    {
+        try {
+            $_logs = LogManagerJob::getAll(true);
+
+            throw_if(!$_logs['status'], 'Exception', $_logs['message']);
+
+            return self::responseData($_logs['data'], $_logs['message'], 200);
+        } catch (\Throwable $th) {
+            return self::responseError($th);
+        }
+    }
+
+    /**
+     * get detail of log manager
+     *
+     * @return array
+     */
+    public static function show(): array
+    {
+        try {
+            $_log = LogManagerJob::setLogAltCode(self::$logCode)->find(true);
+
+            throw_if(!$_log['status'], 'Exception', $_log['message']);
+
+            return self::responseData($_log['data'], $_log['message'], 200);
+        } catch (\Throwable $th) {
+            return self::responseError($th);
+        }
+    }
+
+    /**
      * update log manager
      *
      * @return array
@@ -61,7 +97,7 @@ class LogManagerService
     public static function update(): array
     {
         try {
-            $_update = LogManagerJob::setLogNameType(self::$logName)
+            $_update = LogManagerJob::setLogNameType(self::$logType)
                 ->setLogAltCode(self::$logCode)
                 ->setLogInformation(self::$logInfo)
                 ->update(true);
@@ -114,12 +150,12 @@ class LogManagerService
     /**
      * Set log name
      *
-     * @param string $logName log name
+     * @param string $logType log name
      * @return self
      */
-    public static function setLogName(string $logName): self
+    public static function setLogType(string $logType): self
     {
-        self::$logName = $logName;
+        self::$logType = $logType;
 
         return new self;
     }

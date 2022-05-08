@@ -49,6 +49,10 @@ class LogManagerJob
         $result = ['status' => false, 'data' => null, 'message' => ''];
 
         try {
+            $_log = self::find();
+
+            throw_if($_log['status'], 'Exception', "Log code already taken");
+
             $_create = LogManager::create([
                 'name_type' => self::$logNameType,
                 'alt_code' => self::$logAltCode,
