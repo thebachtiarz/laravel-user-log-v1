@@ -4,8 +4,9 @@
 -------
 
 ## Requires
-- [thebachtiarz/laravel-toolkit-v1](https://github.com/thebachtiarz/laravel-toolkit-v1/)
-- [thebachtiarz/laravel-auth-v1](https://github.com/thebachtiarz/laravel-toolkit-v1/)
+- [laravel/framework](https://github.com/laravel/framework/) v9.x
+- [thebachtiarz/laravel-toolkit-v1](https://github.com/thebachtiarz/laravel-toolkit-v1/) v2.x
+- [thebachtiarz/laravel-auth-v1](https://github.com/thebachtiarz/laravel-toolkit-v1/) v2.x
 
 ## Installation
 - composer config (only if you have access)
@@ -15,11 +16,7 @@ composer config repositories.thebachtiarz/laravel-user-log-v1 git git@github.com
 
 - install repository
 ```bash
-Laravel 9:
-composer require thebachtiarz/laravel-user-log-v1:^2.0
-
-Laravel 8:
-composer require thebachtiarz/laravel-user-log-v1:^1.0
+composer require thebachtiarz/laravel-user-log-v1
 ```
 
 - vendor publish
