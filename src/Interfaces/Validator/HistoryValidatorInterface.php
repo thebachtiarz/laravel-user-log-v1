@@ -7,7 +7,7 @@ interface HistoryValidatorInterface
     // ? Rules
 
     /**
-     * history location rules
+     * History location rules
      */
     public const HISTORY_LOCATION_RULES = [
         'location' => ["nullable", "string"]
@@ -16,7 +16,7 @@ interface HistoryValidatorInterface
     // ? Messages
 
     /**
-     * history location message
+     * History location message
      */
     public const HISTORY_LOCATION_MESSAGES = [
         'location.string' => 'Location cannot be accepted'

@@ -33,28 +33,28 @@ class UserHistoryJob
     protected static HistoryLocation $historyLocation;
 
     /**
-     * protected log code
+     * Protected log code
      *
      * @var string
      */
     protected static string $logCode;
 
     /**
-     * log history
+     * Log history
      *
      * @var string
      */
     protected static string $logHistory;
 
     /**
-     * log history location
+     * Log history location
      *
      * @var string|null
      */
     protected static ?string $logHistoryLocation = null;
 
     /**
-     * limit history days
+     * Limit history days
      *
      * @var integer|null
      */
@@ -62,7 +62,7 @@ class UserHistoryJob
 
     // ? Public Methods
     /**
-     * create new user history
+     * Create new user history
      *
      * @param boolean $map
      * @return array
@@ -102,7 +102,7 @@ class UserHistoryJob
     }
 
     /**
-     * get user histories
+     * Get user histories
      *
      * @param boolean $map
      * @return array
@@ -129,7 +129,7 @@ class UserHistoryJob
     }
 
     /**
-     * get user histories by log manager
+     * Get user histories by log manager
      *
      * @param boolean $map
      * @return array
@@ -156,7 +156,6 @@ class UserHistoryJob
     }
 
     // ? Setter Modules
-
     /**
      * Set model User data
      *

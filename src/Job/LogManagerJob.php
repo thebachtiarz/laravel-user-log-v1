@@ -17,21 +17,21 @@ class LogManagerJob
     protected static LogManager $logManager;
 
     /**
-     * log name type
+     * Log name type
      *
      * @var string
      */
     protected static string $logNameType;
 
     /**
-     * log alternative code
+     * Log alternative code
      *
      * @var string
      */
     protected static string $logAltCode;
 
     /**
-     * log information
+     * Log information
      *
      * @var string
      */
@@ -39,7 +39,7 @@ class LogManagerJob
 
     // ? Public Methods
     /**
-     * create new log manager
+     * Create new log manager
      *
      * @param boolean $map
      * @return array
@@ -74,7 +74,7 @@ class LogManagerJob
     }
 
     /**
-     * update log manager data
+     * Update log manager data
      *
      * @param boolean $map
      * @return array
@@ -111,7 +111,7 @@ class LogManagerJob
     }
 
     /**
-     * get all log manager data
+     * Get all log manager data
      *
      * @param boolean $map
      * @return array
@@ -137,7 +137,7 @@ class LogManagerJob
         }
     }
     /**
-     * find log manager by code
+     * Find log manager by code
      *
      * @param boolean $map
      * @return array

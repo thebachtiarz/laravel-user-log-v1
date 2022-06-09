@@ -7,7 +7,7 @@ use Illuminate\Support\ServiceProvider;
 class UserLogServiceProvider extends ServiceProvider
 {
     /**
-     * register module userlog
+     * Register module userlog
      *
      * @return void
      */
@@ -23,7 +23,7 @@ class UserLogServiceProvider extends ServiceProvider
     }
 
     /**
-     * boot module userlog
+     * Boot module userlog
      *
      * @return void
      */

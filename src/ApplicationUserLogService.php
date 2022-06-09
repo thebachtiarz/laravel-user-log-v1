@@ -5,13 +5,13 @@ namespace TheBachtiarz\UserLog;
 class ApplicationUserLogService
 {
     /**
-     * list of commands from userlog modules
+     * List of commands from userlog modules
      */
     public const COMMANDS = [];
 
     // ? Public Methods
     /**
-     * register config
+     * Register config
      *
      * @return boolean
      */
@@ -26,7 +26,7 @@ class ApplicationUserLogService
     }
 
     /**
-     * register commands
+     * Register commands
      *
      * @return array
      */
@@ -41,7 +41,7 @@ class ApplicationUserLogService
 
     // ? Private Methods
     /**
-     * set configs
+     * Set configs
      *
      * @return void
      */

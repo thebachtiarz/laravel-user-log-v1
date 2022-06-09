@@ -25,7 +25,7 @@ class HistoryLocationJob
     protected static HistoryLocation $historyLocation;
 
     /**
-     * location data
+     * Location data
      *
      * @var string
      */
@@ -33,7 +33,7 @@ class HistoryLocationJob
 
     // ? Public Methods
     /**
-     * create new user history location
+     * Create new user history location
      *
      * @param boolean $map
      * @return array
@@ -67,7 +67,7 @@ class HistoryLocationJob
 
     // ? Private Methods
     /**
-     * history location setter resolver
+     * History location setter resolver
      *
      * @return string|null
      */

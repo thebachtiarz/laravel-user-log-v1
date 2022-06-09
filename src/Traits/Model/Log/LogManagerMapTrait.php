@@ -2,7 +2,7 @@
 
 namespace TheBachtiarz\UserLog\Traits\Model\Log;
 
-use TheBachtiarz\UserLog\Traits\Model\ModelMapTrait;
+use TheBachtiarz\Toolkit\Helper\Model\ModelMapTrait;
 
 /**
  * Log Manager Map Trait
@@ -12,7 +12,7 @@ trait LogManagerMapTrait
     use ModelMapTrait;
 
     /**
-     * log manager simple list map
+     * Log manager simple list map
      *
      * @return array
      */

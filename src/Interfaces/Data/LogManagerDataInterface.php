@@ -19,7 +19,7 @@ interface LogManagerDataInterface
     ];
 
     /**
-     * default scapegoat log code
+     * Default scapegoat log code
      */
     public const LOG_SCAPEGOAT_ID = 1;
     public const LOG_SCAPEGOAT = "999999";

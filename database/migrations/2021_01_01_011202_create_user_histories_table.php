@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 use TheBachtiarz\Auth\Model\User;
 use TheBachtiarz\UserLog\Models\LogManager;
 
-class CreateUserHistoriesTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -33,4 +33,4 @@ class CreateUserHistoriesTable extends Migration
     {
         Schema::dropIfExists('user_histories');
     }
-}
+};

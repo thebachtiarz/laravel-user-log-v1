@@ -12,7 +12,7 @@ trait UserHistoryScopeTrait
     use CarbonHelper;
 
     /**
-     * get user history by user id
+     * Get user history by user id
      *
      * @param integer $userId
      * @return object|null
@@ -23,7 +23,7 @@ trait UserHistoryScopeTrait
     }
 
     /**
-     * get user history
+     * Get user history
      *
      * @param integer $userId
      * @param integer|null $days
@@ -37,7 +37,7 @@ trait UserHistoryScopeTrait
     }
 
     /**
-     * get user history by log manager id
+     * Get user history by log manager id
      *
      * @param integer $userId
      * @param array $logIds

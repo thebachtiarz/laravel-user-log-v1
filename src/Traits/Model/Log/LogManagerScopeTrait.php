@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 trait LogManagerScopeTrait
 {
     /**
-     * get log manager by code
+     * Get log manager by code
      *
      * @param string $logCode
      * @return object|null

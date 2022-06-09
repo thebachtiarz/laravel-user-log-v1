@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use TheBachtiarz\UserLog\Models\UserHistory;
 
-class CreateHistoryLocationsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -31,4 +31,4 @@ class CreateHistoryLocationsTable extends Migration
     {
         Schema::dropIfExists('history_locations');
     }
-}
+};

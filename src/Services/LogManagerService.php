@@ -11,21 +11,21 @@ class LogManagerService
     use DataResponse;
 
     /**
-     * log type name
+     * Log type name
      *
      * @var string
      */
     private static string $logType;
 
     /**
-     * log code
+     * Log code
      *
      * @var string
      */
     private static string $logCode;
 
     /**
-     * log info
+     * Log info
      *
      * @var string
      */
@@ -33,7 +33,7 @@ class LogManagerService
 
     // ? Public Methods
     /**
-     * create new log manager
+     * Create new log manager
      *
      * @return array
      */
@@ -54,7 +54,7 @@ class LogManagerService
     }
 
     /**
-     * get all log manager
+     * Get all log manager
      *
      * @return array
      */
@@ -72,7 +72,7 @@ class LogManagerService
     }
 
     /**
-     * get detail of log manager
+     * Get detail of log manager
      *
      * @return array
      */
@@ -90,7 +90,7 @@ class LogManagerService
     }
 
     /**
-     * update log manager
+     * Update log manager
      *
      * @return array
      */
@@ -111,7 +111,7 @@ class LogManagerService
     }
 
     /**
-     * reset log manager by data
+     * Reset log manager by data
      *
      * @return array
      */

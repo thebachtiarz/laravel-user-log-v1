@@ -3,7 +3,7 @@
 namespace TheBachtiarz\UserLog\Traits\Model\User;
 
 use TheBachtiarz\Toolkit\Helper\App\Converter\ConverterHelper;
-use TheBachtiarz\UserLog\Traits\Model\ModelMapTrait;
+use TheBachtiarz\Toolkit\Helper\Model\ModelMapTrait;
 
 /**
  * User History Map Trait
@@ -13,7 +13,7 @@ trait UserHistoryMapTrait
     use ModelMapTrait, ConverterHelper;
 
     /**
-     * user history simple list map
+     * User history simple list map
      *
      * @return array
      */
@@ -30,7 +30,7 @@ trait UserHistoryMapTrait
     }
 
     /**
-     * location history resolver
+     * Location history resolver
      *
      * @return array
      */

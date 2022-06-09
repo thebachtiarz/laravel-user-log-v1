@@ -12,14 +12,14 @@ use TheBachtiarz\UserLog\Models\LogManager;
 trait UserHistoryTraitService
 {
     /**
-     * history location data
+     * History location data
      *
      * @var string|null
      */
     private static ?string $historyLocation = null;
 
     /**
-     * create user history
+     * Create user history
      *
      * @param User $user
      * @param string $logCode

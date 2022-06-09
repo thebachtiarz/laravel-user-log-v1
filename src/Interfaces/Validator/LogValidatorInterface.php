@@ -9,14 +9,14 @@ interface LogValidatorInterface
     // ? Rules
 
     /**
-     * log code validator rules
+     * Log code validator rules
      */
     public const LOG_CODE_RULES = [
         'code' => ["required", "numeric"],
     ];
 
     /**
-     * log create validator rules
+     * Log create validator rules
      */
     public const LOG_CREATE_RULES = [
         'type' => ["required", "string", "alpha_dash"],
@@ -24,7 +24,7 @@ interface LogValidatorInterface
     ] + self::LOG_CODE_RULES;
 
     /**
-     * log update validator rules
+     * Log update validator rules
      */
     public const LOG_UPDATE_RULES = [
         'type' => ["required", "string", "alpha_dash"],
@@ -34,14 +34,14 @@ interface LogValidatorInterface
     // ? Messages
 
     /**
-     * log code validator messages
+     * Log code validator messages
      */
     public const LOG_CODE_MESSAGES = [
         'code.numeric' => 'Log code must be an numeric character',
     ];
 
     /**
-     * log create validator messages
+     * Log create validator messages
      */
     public const LOG_CREATE_MESSAGES = [
         'type.alpha_dash' => 'Log type cannot be accepted',
@@ -49,7 +49,7 @@ interface LogValidatorInterface
     ] + self::LOG_CODE_MESSAGES;
 
     /**
-     * log update validator messages
+     * Log update validator messages
      */
     public const LOG_UPDATE_MESSAGES = [
         'type.alpha_dash' => 'Log type cannot be accepted',
